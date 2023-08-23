@@ -1,0 +1,22 @@
+kind: pipeline
+type: docker
+name: default
+steps:
+  - name: build
+    image: golang:1.19.1-alpine3.16
+    commands:
+      - go env -w GOPROXY=https://goproxy.cn,direct
+      - GOOS=linux GOARCH=amd64 go build -o drone-webhook
+  - name: publish
+    depends_on:
+      - build
+    image: plugins/docker
+    pull: if-not-exists
+    settings:
+      registry: registry.cn-shanghai.aliyuncs.com
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: registry.cn-shanghai.aliyuncs.com/zzf2001/drone-webhook
+      tags: latest
