@@ -53,8 +53,8 @@ func shortenHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func expandHandler(w http.ResponseWriter, r *http.Request) {
-	shortURL := r.URL.Path[len("/expand/"):]
-
+	shortURL := r.URL.Path[len("/"):]
+	fmt.Println("接受参数", shortURL)
 	// Using Redis HGET to retrieve the long URL associated with shortURL
 	longURL, err := rdb.HGet(ctx, shortURL, "longURL").Result()
 	if err == redis.Nil {
