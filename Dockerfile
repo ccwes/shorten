@@ -1,5 +1,5 @@
 FROM alpine:latest
 
-ADD drone-webhook /bin/
+ADD shorten /bin/
 RUN apk -Uuv add ca-certificates
-ENTRYPOINT /bin/drone-webhook
+ENTRYPOINT /bin/shorten
