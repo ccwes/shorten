@@ -3,20 +3,22 @@ type: docker
 name: default
 steps:
   - name: build
-    image: golang:1.19.1-alpine3.16
+    image: golang:alpine
     commands:
       - go env -w GOPROXY=https://goproxy.cn,direct
-      - GOOS=linux GOARCH=amd64 go build -o drone-webhook
+      - GOOS=linux GOARCH=amd64 go build -o shorten
   - name: publish
     depends_on:
       - build
     image: plugins/docker
     pull: if-not-exists
     settings:
-      registry: registry.cn-shanghai.aliyuncs.com
+      registry: hub.ccw.es
       username:
-        from_secret: docker_username
+        from_secret: nexus_docker_username
       password:
-        from_secret: docker_password
-      repo: registry.cn-shanghai.aliyuncs.com/zzf2001/drone-webhook
-      tags: latest
+        from_secret: nexus_docker_password
+      repo: hub.ccw.es/home/shorten
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}
+        - latest
