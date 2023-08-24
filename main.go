@@ -60,7 +60,8 @@ func expandHandler(w http.ResponseWriter, r *http.Request) {
 	shortURL := r.URL.Path[len("/"):]
 	fmt.Println("接受参数", shortURL)
 	// Using Redis HGET to retrieve the long URL associated with shortURL
-	longURL, err := rdb.HGet(ctx, shortURL, "longURL").Result()
+	longURL, err := rdb.HGet(ctx, "longURL", shortURL).Result()
+	fmt.Println(longURL)
 	if err == redis.Nil {
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return
