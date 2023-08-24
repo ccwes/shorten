@@ -7,7 +7,7 @@ steps:
     commands:
       - go env -w GOPROXY=https://goproxy.cn,direct
       - GOOS=linux GOARCH=amd64 go build -o shorten
-  - name: publish
+  - name: build_docker
     depends_on:
       - build
     image: plugins/docker
