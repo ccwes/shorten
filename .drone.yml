@@ -7,6 +7,8 @@ steps:
     commands:
       - go env -w GOPROXY=https://goproxy.cn,direct
       - GOOS=linux GOARCH=amd64 go build -o shorten
+      - echo ${DRONE_COMMIT}
+      - echo ${DRONE_COMMIT_SHA}
   - name: build_docker
     depends_on:
       - build
