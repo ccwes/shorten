@@ -24,7 +24,7 @@ var (
 )
 
 func main() {
-	http.HandleFunc("/healthz", healthzHandler)
+	http.HandleFunc("/health", healthHandler)
 	http.HandleFunc("/shorten", shortenHandler)
 	http.HandleFunc("/", expandHandler)
 	fmt.Println("Server is running on port 8080")
@@ -34,7 +34,7 @@ func main() {
 		return
 	}
 }
-func healthzHandler(w http.ResponseWriter, r *http.Request) {
+func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Service is healthy!")
 }
