@@ -24,6 +24,7 @@ var (
 )
 
 func main() {
+	http.HandleFunc("/healthz", healthzHandler)
 	http.HandleFunc("/shorten", shortenHandler)
 	http.HandleFunc("/", expandHandler)
 	fmt.Println("Server is running on port 8080")
@@ -33,7 +34,10 @@ func main() {
 		return
 	}
 }
-
+func healthzHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "Service is healthy!")
+}
 func shortenHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Only POST method is allowed", http.StatusBadRequest)
