@@ -57,7 +57,7 @@ func shortenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "%s%s", os.Getenv("BASE_URL"), shortURL)
+	fmt.Fprintf(w, "%s/%s", os.Getenv("BASE_URL"), shortURL)
 }
 
 func expandHandler(w http.ResponseWriter, r *http.Request) {
